@@ -1,0 +1,29 @@
+# Central config — all tuneable parameters live here
+# Code reads this via src/utils/config.py — no magic strings in source files
+
+ingestion:
+  chunk_size: 500
+  chunk_overlap: 50
+  supported_formats: [".pdf"]
+
+retrieval:
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  top_k: 5
+  collection_name: "rag_documents"
+  chroma_persist_dir: "./chroma_db"
+
+generation:
+  # Switch between "ollama" and "huggingface"
+  backend: "ollama"
+  ollama_model: "mistral"
+  hf_model_id: "mistralai/Mistral-7B-Instruct-v0.2"
+  max_new_tokens: 512
+  temperature: 0.1   # Low temp = more factual, less creative
+
+evaluation:
+  ragas_metrics: ["faithfulness", "answer_relevancy", "context_precision", "context_recall"]
+  faithfulness_threshold: 0.7
+
+logging:
+  level: "INFO"
+  file: "logs/app.log"

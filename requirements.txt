@@ -1,0 +1,43 @@
+# PDF parsing
+pymupdf==1.24.5
+pdfplumber==0.11.0
+
+# Embeddings
+sentence-transformers==3.0.1
+
+# Vector store
+chromadb==0.5.3
+
+# LLM clients
+ollama==0.2.1
+huggingface-hub==0.23.4
+transformers==4.42.4
+
+# RAG framework (used only in Phase 6 wiring — understand each piece first)
+langchain==0.2.6
+langchain-community==0.2.6
+
+# Evaluation
+ragas==0.1.14
+datasets==2.20.0
+
+# API layer
+fastapi==0.111.0
+uvicorn==0.30.1
+
+# UI
+gradio==4.37.2
+
+# Config & utilities
+python-dotenv==1.0.1
+pyyaml==6.0.1
+loguru==0.7.2
+
+# Testing
+pytest==8.2.2
+pytest-asyncio==0.23.7
+
+# Dev tools
+black==24.4.2
+ruff==0.5.1
+ipykernel==6.29.5
