@@ -14,7 +14,7 @@ retrieval:
 
 generation:
   # Switch between "ollama" and "huggingface"
-  backend: "ollama"
+  backend: "huggingface"
   ollama_model: "mistral"
   hf_model_id: "mistralai/Mistral-7B-Instruct-v0.2"
   max_new_tokens: 512

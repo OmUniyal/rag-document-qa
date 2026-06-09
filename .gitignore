@@ -45,3 +45,5 @@ logs/
 # Model cache
 .cache/
 models/
+
+chroma_db_explore/
