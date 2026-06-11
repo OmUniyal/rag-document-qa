@@ -36,8 +36,7 @@ class Config:
 
         # Generation
         self.llm_backend: str = cfg["generation"]["backend"]
-        self.ollama_model: str = cfg["generation"]["ollama_model"]
-        self.hf_model_id: str = cfg["generation"]["hf_model_id"]
+        self.groq_model: str = cfg["generation"]["groq_model"]
         self.max_new_tokens: int = cfg["generation"]["max_new_tokens"]
         self.temperature: float = cfg["generation"]["temperature"]
         self.groq_model: str = cfg["generation"]["groq_model"]

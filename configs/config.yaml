@@ -13,11 +13,8 @@ retrieval:
   chroma_persist_dir: "./chroma_db"
 
 generation:
-  # Backends: "groq" | "ollama" (local) | "huggingface" (fallback)
   backend: "groq"
   groq_model: "llama-3.1-8b-instant"
-  ollama_model: "mistral"
-  hf_model_id: "mistralai/Mistral-7B-Instruct-v0.2"
   max_new_tokens: 512
   temperature: 0.1   # Low temp = more factual, less creative
 
