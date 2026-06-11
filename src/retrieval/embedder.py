@@ -25,7 +25,7 @@ class Embedder:
         logger.info(f"Loading embedding model: {model_name}")
         self.model = SentenceTransformer(model_name)
         self.model_name = model_name
-        self.embedding_dim = self.model.get_sentence_embedding_dimension()
+        self.embedding_dim = self.model.get_embedding_dimension()
         logger.info(f"  Embedding dimension: {self.embedding_dim}")
 
     def embed_texts(self, texts: list[str]) -> list[list[float]]:
