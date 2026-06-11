@@ -10,4 +10,6 @@ target-version = ["py311"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-asyncio_mode = "auto"
+markers = [
+    "llm: marks tests that make real LLM API calls (deselect with '-m not llm')",
+]
