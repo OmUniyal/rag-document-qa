@@ -1,17 +1,15 @@
 """
-LLM backend abstraction layer.
+LLM backend — Groq API.
+Fast, free tier, reliable. Uses llama-3.1-8b-instant.
 
-Supports two backends selectable via config.yaml:
-  - "ollama":      Local Mistral/Llama via Ollama. Free, private, no token needed.
-  - "huggingface": HuggingFace Inference API. Free tier, needs HF_API_TOKEN.
-
-Why abstract this?
-  Swapping LLM providers should NOT require changes anywhere else in the codebase.
-  This is the Open/Closed principle applied to ML systems.
+Why Groq over HuggingFace inference API:
+- More stable free tier
+- Lower latency
+- No provider routing issues
 """
 
-import requests
-import ollama as ollama_client
+import os
+from groq import Groq
 from src.utils.config import config
 from src.utils.logger import logger
 
@@ -19,63 +17,23 @@ from src.utils.logger import logger
 class LLMClient:
 
     def __init__(self):
-        self.backend = config.llm_backend
-        logger.info(f"LLM backend: {self.backend}")
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            raise ValueError("GROQ_API_KEY not set in .env")
+        self.client = Groq(api_key=api_key)
+        self.model = config.groq_model
+        logger.info(f"LLM client ready: Groq ({self.model})")
 
     def generate(self, prompt: str) -> str:
-        """
-        Send a prompt, get a response string back.
-        All backend differences are hidden here.
-        """
-        if self.backend == "ollama":
-            return self._generate_ollama(prompt)
-        elif self.backend == "huggingface":
-            return self._generate_huggingface(prompt)
-        else:
-            raise ValueError(f"Unknown backend: {self.backend}. Choose 'ollama' or 'huggingface'.")
-
-    def _generate_ollama(self, prompt: str) -> str:
-        """
-        Call local Ollama server.
-        Ollama must be running: `ollama serve` and model pulled: `ollama pull mistral`
-        """
+        """Send prompt, get response string back."""
         try:
-            response = ollama_client.generate(
-                model=config.ollama_model,
-                prompt=prompt,
-                options={
-                    "temperature": config.temperature,
-                    "num_predict": config.max_new_tokens,
-                },
+            completion = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=config.max_new_tokens,
+                temperature=config.temperature,
             )
-            return response["response"].strip()
+            return completion.choices[0].message.content.strip()
         except Exception as e:
-            logger.error(f"Ollama error: {e}")
+            logger.error(f"Groq error: {e}")
             raise
-
-    def _generate_huggingface(self, prompt: str) -> str:
-        """
-        Call HuggingFace Inference API.
-        Free tier has rate limits. Good for testing without local GPU.
-        """
-        if not config.hf_api_token:
-            raise ValueError("HF_API_TOKEN not set in .env")
-
-        api_url = f"https://api-inference.huggingface.co/models/{config.hf_model_id}"
-        headers = {"Authorization": f"Bearer {config.hf_api_token}"}
-        payload = {
-            "inputs": prompt,
-            "parameters": {
-                "max_new_tokens": config.max_new_tokens,
-                "temperature": config.temperature,
-                "return_full_text": False,
-            },
-        }
-
-        response = requests.post(api_url, headers=headers, json=payload, timeout=60)
-        response.raise_for_status()
-        result = response.json()
-
-        if isinstance(result, list) and result:
-            return result[0].get("generated_text", "").strip()
-        return str(result)

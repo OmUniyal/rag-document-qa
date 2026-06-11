@@ -40,6 +40,7 @@ class Config:
         self.hf_model_id: str = cfg["generation"]["hf_model_id"]
         self.max_new_tokens: int = cfg["generation"]["max_new_tokens"]
         self.temperature: float = cfg["generation"]["temperature"]
+        self.groq_model: str = cfg["generation"]["groq_model"]
 
         # Secrets from .env (never from yaml)
         self.hf_api_token: str = os.getenv("HF_API_TOKEN", "")

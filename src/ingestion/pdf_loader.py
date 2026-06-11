@@ -1,28 +1,20 @@
 """
-Phase 1 of the pipeline: load raw PDFs and extract text.
-
-Why this is its own module:
-- PDF parsing is messy (headers, footers, tables, multi-column layouts).
-- Separating loading from chunking means you can swap parsers without
-  touching downstream code.
+PDF loader using pdfplumber — pure Python, no native DLLs.
+Extracts text page by page, preserving page number metadata
+for source attribution in answers.
 """
 
 from pathlib import Path
-import fitz  # PyMuPDF
+import pdfplumber
 from src.utils.logger import logger
 
 
-def load_pdf(file_path: str | Path) -> list[dict]:
+def load_pdf(file_path: str) -> list[dict]:
     """
     Extract text from each page of a PDF.
 
     Returns:
         List of dicts: [{"page": int, "text": str, "source": str}, ...]
-
-    Why page-by-page?
-        Preserves metadata (page number) for source attribution in answers.
-        An answer citing "page 4 of document X" is far more useful than
-        one with no provenance.
     """
     path = Path(file_path)
     if not path.exists():
@@ -33,15 +25,15 @@ def load_pdf(file_path: str | Path) -> list[dict]:
     logger.info(f"Loading PDF: {path.name}")
     pages = []
 
-    with fitz.open(str(path)) as doc:
-        for page_num, page in enumerate(doc, start=1):
-            text = page.get_text("text").strip()
-            if not text:
-                logger.debug(f"  Page {page_num}: empty (image-only or scanned?), skipping")
+    with pdfplumber.open(str(path)) as pdf:
+        for page_num, page in enumerate(pdf.pages, start=1):
+            text = page.extract_text()
+            if not text or not text.strip():
+                logger.debug(f"  Page {page_num}: empty, skipping")
                 continue
             pages.append({
                 "page": page_num,
-                "text": text,
+                "text": text.strip(),
                 "source": path.name,
             })
 
@@ -49,8 +41,8 @@ def load_pdf(file_path: str | Path) -> list[dict]:
     return pages
 
 
-def load_pdfs_from_dir(dir_path: str | Path) -> list[dict]:
-    """Load all PDFs from a directory. Used during bulk ingestion."""
+def load_pdfs_from_dir(dir_path: str) -> list[dict]:
+    """Load all PDFs from a directory."""
     dir_path = Path(dir_path)
     all_pages = []
     pdf_files = list(dir_path.glob("*.pdf"))

@@ -47,3 +47,5 @@ logs/
 models/
 
 chroma_db_explore/
+
+test_rag.py
