@@ -73,7 +73,7 @@ Relevant to multilingual marketing campaign workflows.
 - Cross-lingual retrieval — query in English, retrieve from Hindi/regional
   language documents or vice versa
 - Evaluation of multilingual embedding models on enterprise campaign content
-- Integration with existing MoEngage multilingual campaign architecture
+- Integration with existing marketing automation platform multilingual campaign architecture
 
 **Aligns with:** NLP Applications course (Sem 3), existing work experience
 
@@ -116,7 +116,7 @@ strategy documents
 ---
 
 ### Use Case 2: Data Pipeline Documentation Assistant
-**Problem:** SnapLogic pipelines and in-house orchestration tools generate
+**Problem:** data pipeline orchestration tool pipelines and in-house orchestration tools generate
 fragmented documentation. New team members struggle to understand pipeline
 logic, and even experienced members lose time hunting for specific pipeline
 behaviour.
@@ -133,12 +133,12 @@ explored as a hackathon entry.
 
 ---
 
-### Use Case 3: MoEngage Feature Documentation Q&A
+### Use Case 3: marketing automation platform Feature Documentation Q&A
 **Problem:** Product and marketing teams frequently ask repetitive questions
-about MoEngage features, API capabilities, and integration options that are
+about marketing automation platform features, API capabilities, and integration options that are
 documented but hard to search.
 
-**RAG solution:** Ingest MoEngage documentation, release notes, and internal
+**RAG solution:** Ingest marketing automation platform documentation, release notes, and internal
 how-to guides. Enable teams to ask questions in natural language rather than
 searching through documentation manually.
 
@@ -200,7 +200,7 @@ Added as they become relevant.
   Grew into potential dissertation candidate naturally.
 - Oracle SQL background connects to GraphRAG direction — relational thinking
   maps to graph traversal intuitively.
-- Multilingual RAG connects to existing MoEngage work — could satisfy
+- Multilingual RAG connects to existing marketing automation platform work — could satisfy
   organizational relevance requirement if BITS WILP expects industry applicability.
 - Pipeline observability tool concept (hackathon idea) + RAG = Use Case 2 above.
   Two ideas that were separate now converge.
