@@ -21,34 +21,33 @@ Query → [embedder] → [vector_store.query()] → [prompt_builder] → [LLM] �
 | PDF parsing | PyMuPDF | Fast, accurate text extraction |
 | Embeddings | sentence-transformers | Local, no API cost |
 | Vector store | ChromaDB | Persistent, no infra needed |
-| LLM | Ollama (Mistral 7B) | Local, private, free |
+| LLM | Groq (Llama 3.1 8B) | Free tier, fast inference, no local install |
 | UI | Gradio | One-file deploy to HF Spaces |
 
 ## Setup
 
 ```bash
 # 1. Clone and create virtual environment
-git clone <your-repo>
+git clone https://github.com/OmUniyal/rag-document-qa
 cd rag-document-qa
-python -m venv .venv && source .venv/bin/activate
+python -m venv .venv
+.venv\Scripts\Activate.ps1        # Windows
+# source .venv/bin/activate       # Mac/Linux
 
 # 2. Install dependencies
-make install
+pip install -r requirements.txt
 
 # 3. Configure
 cp .env.example .env
-# Edit .env if using HuggingFace backend instead of Ollama
+# Add your GROQ_API_KEY to .env (get a free key at console.groq.com)
 
-# 4. Install and start Ollama (for local LLM)
-# Download from https://ollama.ai
-ollama pull mistral
+# 4. Drop your PDFs into data/raw/
 
-# 5. Drop your PDFs into data/raw/
-# 6. Ingest
-make ingest
+# 5. Ingest
+python ingest.py
 
-# 7. Run the app
-make run
+# 6. Run the app
+python app.py
 ```
 
 ## Development
