@@ -3,6 +3,9 @@
 A production-structured Retrieval-Augmented Generation (RAG) system built from scratch.
 Ask natural language questions against your own PDF documents.
 
+## Live Demo
+👉 [Try it on HuggingFace Spaces](https://huggingface.co/spaces/omUniyal/rag-document-qa)
+
 ## Architecture
 
 ```
