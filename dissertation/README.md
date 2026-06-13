@@ -204,3 +204,5 @@ Added as they become relevant.
   organizational relevance requirement if BITS WILP expects industry applicability.
 - Pipeline observability tool concept (hackathon idea) + RAG = Use Case 2 above.
   Two ideas that were separate now converge.
+
+**Live demo:** https://huggingface.co/spaces/omUniyal/rag-document-qa
