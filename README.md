@@ -6,6 +6,8 @@ Ask natural language questions against your own PDF documents.
 ## Live Demo
 👉 [Try it on HuggingFace Spaces](https://huggingface.co/spaces/omUniyal/rag-document-qa)
 
+Upload any PDF and ask questions about it instantly. Pre-loaded with the Attention Is All You Need and RAG papers.
+
 ## Architecture
 
 ```
