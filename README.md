@@ -16,6 +16,15 @@ PDF → [pdf_loader] → [chunker] → [embedder] → [vector_store (ChromaDB)]
 Query → [embedder] → [vector_store.query()] → [prompt_builder] → [LLM] → Answer + Sources
 ```
 
+## LLM Backend
+
+The system supports two LLM backends with automatic fallback:
+
+- **Primary**: Self-hosted [Ollama](https://ollama.com) running `phi3:mini` on a dedicated inference server (nitro-server) accessible via Tailscale
+- **Fallback**: [Groq API](https://groq.com) (`llama-3.1-8b-instant`) if Ollama is unreachable
+
+This pattern eliminates API costs and rate limits during development while maintaining availability through the Groq fallback. See `src/generation/llm_client.py` for the circuit breaker implementation.
+
 ## Stack
 
 | Layer | Tool | Why |
